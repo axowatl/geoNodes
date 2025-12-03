@@ -43,16 +43,16 @@ export class Node {
 
     createElement() {
         const nodeElem = document.createElement('div');
-        nodeElem.style.width = '100px';
+        nodeElem.style.width = `${this.width}px`;
         nodeElem.style.height = '20px';
-        nodeElem.style.borderTopLeftRadius = '16px';
-        nodeElem.style.borderTopRightRadius = '16px';
+        nodeElem.style.borderTopLeftRadius = '4px';
+        nodeElem.style.borderTopRightRadius = '4px';
         nodeElem.style.borderBottomLeftRadius = '0px';
         nodeElem.style.borderBottomRightRadius = '0px';
         nodeElem.style.position = 'absolute';
         nodeElem.style.left = '40px';
         nodeElem.style.top = '40px';
-        nodeElem.style.backgroundClip = '#FF0000';
+        nodeElem.style.backgroundColor = '#FF0000';
         document.body.appendChild(nodeElem);
     }
 }
