@@ -43,7 +43,7 @@ export class Node {
 
     createElement() {
         const nodeElem = document.createElement('div');
-        nodeElem.style.width = `${this.width}px`;
+        nodeElem.style.width = '100px';
         nodeElem.style.height = '20px';
         nodeElem.style.borderTopLeftRadius = '16px';
         nodeElem.style.borderTopRightRadius = '16px';
