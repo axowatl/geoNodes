@@ -52,6 +52,7 @@ export class Node {
         nodeElem.style.position = 'absolute';
         nodeElem.style.left = '40px';
         nodeElem.style.top = '40px';
+        nodeElem.style.backgroundClip = '#FF0000';
         document.body.appendChild(nodeElem);
     }
 }
