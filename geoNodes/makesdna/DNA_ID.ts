@@ -3,89 +3,84 @@ export type LibraryRuntimeHandle = any;
 export type IDPropertyGroupChildrenSet = any;
 export type ID_RuntimeHandle = any;
 
-struct FileData;
-struct GHash;
-struct ID;
-struct Library;
-struct PackedFile;
-struct UniqueName_Map;
+type FileData = any;
+type GHash = any;
+type ID = any;
+type Library = any;
+type PackedFile = any;
+type UniqueName_Map = any;
 
-typedef struct IDPropertyUIData {
+interface IDPropertyUIData {
   /** Tool-tip / property description pointer. Owned by the #IDProperty. */
-  char *description;
+  description: string | null;
   /** RNA `subtype`, used for every type except string properties (#PropertySubType). */
-  int rna_subtype;
-
-  char _pad[4];
-} IDPropertyUIData;
+  rna_subtype: number;
+}
 
 /* DNA version of #EnumPropertyItem. */
-typedef struct IDPropertyUIDataEnumItem {
+interface IDPropertyUIDataEnumItem {
   /* Unique identifier, used for string lookup. */
-  char *identifier;
+  identifier: string | null;
   /* UI name of the item. */
-  char *name;
+  name: string;
   /* Optional description. */
-  char *description;
+  description?: string;
   /* Unique integer value, should never change. */
-  int value;
+  value: number;
   /* Optional icon. */
-  int icon;
-} IDPropertyUIDataEnumItem;
+  icon?: number;
+}
 
 /* IDP_UI_DATA_TYPE_INT */
-typedef struct IDPropertyUIDataInt {
-  IDPropertyUIData base;
-  int *default_array; /* Only for array properties. */
-  int default_array_len;
+interface IDPropertyUIDataInt {
+  base: IDPropertyUIData;
+  default_array: number; /* Only for array properties. */
+  default_array_len: number;
 
-  int min;
-  int max;
-  int soft_min;
-  int soft_max;
-  int step;
-  int default_value;
+  min: number;
+  max: number;
+  soft_min: number;
+  soft_max: number;
+  step: number;
+  default_value: number;
 
-  int enum_items_num;
-  IDPropertyUIDataEnumItem *enum_items;
-} IDPropertyUIDataInt;
+  enum_items_num: int;
+  enum_items: IDPropertyUIDataEnumItem;
+}
 
 /** For #IDP_UI_DATA_TYPE_BOOLEAN Use `int8_t` because DNA does not support `bool`. */
-typedef struct IDPropertyUIDataBool {
-  IDPropertyUIData base;
-  int8_t *default_array; /* Only for array properties. */
-  int default_array_len;
-  char _pad[3];
-
-  int8_t default_value;
-} IDPropertyUIDataBool;
+interface IDPropertyUIDataBool {
+  base: IDPropertyUIData;
+  default_array: number; /* Only for array properties. */
+  default_array_len: number;
+  default_value: number;
+}
 
 /** For #IDP_UI_DATA_TYPE_FLOAT */
-typedef struct IDPropertyUIDataFloat {
-  IDPropertyUIData base;
-  double *default_array; /* Only for array properties. */
-  int default_array_len;
-  char _pad[4];
+interface IDPropertyUIDataFloat {
+  base: IDPropertyUIData;
+  default_array: number; /* Only for array properties. */
+  default_array_len: number;
 
-  float step;
-  int precision;
+  step: number;
+  precision: number;
 
-  double min;
-  double max;
-  double soft_min;
-  double soft_max;
-  double default_value;
-} IDPropertyUIDataFloat;
+  min: number;
+  max: number;
+  soft_min: number;
+  soft_max: number;
+  default_value: number;
+}
 
 /** For #IDP_UI_DATA_TYPE_STRING */
-typedef struct IDPropertyUIDataString {
-  IDPropertyUIData base;
-  char *default_value;
-} IDPropertyUIDataString;
+interface IDPropertyUIDataString {
+  base: IDPropertyUIData;
+  default_value: string;
+}
 
 /** For #IDP_UI_DATA_TYPE_ID. */
-typedef struct IDPropertyUIDataID {
-  IDPropertyUIData base;
+interface IDPropertyUIDataID {
+  base: IDPropertyUIData;
   /**
    * #ID_Type. With python-defined properties, this type is not enforced. A value of `0` means any
    * ID type.
@@ -93,57 +88,56 @@ typedef struct IDPropertyUIDataID {
    * However, when defined/edited from the UI (Custom Properties panel), it must/will be defined,
    * as generic 'Any ID type' selection is a TODO UI-wise.
    */
-  short id_type;
-  char _pad[6];
-} IDPropertyUIDataID;
+  id_type: number;
+}
 
-typedef struct IDPropertyData {
-  void *pointer;
-  ListBase group;
+interface IDPropertyData {
+  pointer: any;
+  group: any[];
   /**
    * Allows constant time lookup by name of the children in this group. This may be null if the
    * group is empty. The order may not be exactly the same as in #group.
    */
-  IDPropertyGroupChildrenSet *children_map;
+  children_map: IDPropertyGroupChildrenSet;
   /** NOTE: a `double` is written into two 32bit integers. */
-  int val, val2;
-} IDPropertyData;
+  val: number;
+  val2: number;
+}
 
-typedef struct IDProperty {
-  struct IDProperty *next, *prev;
+interface IDProperty {
+  next?: IDProperty;
+  prev?: IDProperty;
   /** #eIDPropertyType */
-  char type;
+  type: string;
   /**
    * #eIDPropertySubType when `type` is #IDP_STRING.
    * #eIDPropertyType for all other types.
    */
-  char subtype;
+  subtype: string;
   /** #IDP_FLAG_GHOST and others. */
-  short flag;
-  char name[/*MAX_IDPROP_NAME*/ 64];
-
-  char _pad0[4];
+  flag: number;
+  name: string;
 
   /** NOTE: alignment for 64 bits. */
-  IDPropertyData data;
+  data: IDPropertyData;
 
   /**
    * Array length, and importantly string length + 1.
    * the idea is to be able to reuse array reallocation functions on strings.
    */
-  int len;
+  len: number;
   /**
    * Strings and arrays are both buffered, though the buffer isn't saved.
    * `totallen` is total length of allocated array/string, including a buffer.
    * \note the buffering is mild; see #IDP_ResizeIDPArray for details.
    */
-  int totallen;
+  totallen: number;
 
-  IDPropertyUIData *ui_data;
-} IDProperty;
+  ui_data: IDPropertyUIData;
+}
 
-#define MAX_IDPROP_NAME 64
-#define DEFAULT_ALLOC_FOR_NULL_STRINGS 64
+const MAX_IDPROP_NAME: number = 64;
+const DEFAULT_ALLOC_FOR_NULL_STRINGS: number = 64;
 
 /* add any future new id property types here. */
 
