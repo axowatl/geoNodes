@@ -1,48 +1,7 @@
-/* SPDX-FileCopyrightText: 2001-2002 NaN Holding BV. All rights reserved.
- *
- * SPDX-License-Identifier: GPL-2.0-or-later */
-
-/** \file
- * \ingroup DNA
- * \brief ID and Library types, which are fundamental for SDNA.
- */
-
-#pragma once
-
-#include "DNA_ID_enums.h"
-#include "DNA_defs.h"
-#include "DNA_listBase.h"
-
-#include "BLI_assert.h"
-#include "BLI_compiler_typecheck.h"
-
-/** Workaround to forward-declare C++ type in C header. */
-#ifdef __cplusplus
-#  include <cstring>
-#  include <type_traits>
-
-namespace blender::bke::id {
-struct ID_Runtime;
-}
-namespace blender::bke {
-struct PreviewImageRuntime;
-}
-namespace blender::bke::idprop {
-struct IDPropertyGroupChildrenSet;
-}
-namespace blender::bke::library {
-struct LibraryRuntime;
-}
-using ID_RuntimeHandle = blender::bke::id::ID_Runtime;
-using PreviewImageRuntimeHandle = blender::bke::PreviewImageRuntime;
-using LibraryRuntimeHandle = blender::bke::library::LibraryRuntime;
-using IDPropertyGroupChildrenSet = blender::bke::idprop::IDPropertyGroupChildrenSet;
-#else
-typedef struct PreviewImageRuntimeHandle PreviewImageRuntimeHandle;
-typedef struct LibraryRuntimeHandle LibraryRuntimeHandle;
-typedef struct IDPropertyGroupChildrenSet IDPropertyGroupChildrenSet;
-typedef struct ID_RuntimeHandle ID_RuntimeHandle;
-#endif
+export type PreviewImageRuntimeHandle = any;
+export type LibraryRuntimeHandle = any;
+export type IDPropertyGroupChildrenSet = any;
+export type ID_RuntimeHandle = any;
 
 struct FileData;
 struct GHash;

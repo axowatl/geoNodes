@@ -1,4 +1,4 @@
-enum eIconSizes {
+export enum eIconSizes {
   ICON_SIZE_ICON = 0,
   ICON_SIZE_PREVIEW = 1,
 
@@ -6,7 +6,7 @@ enum eIconSizes {
 };
 
 /** #IDProperty.type */
-enum eIDPropertyType {
+export enum eIDPropertyType {
   IDP_STRING = 0,
   IDP_INT = 1,
   IDP_FLOAT = 2,
@@ -22,29 +22,27 @@ enum eIDPropertyType {
    */
   IDP_BOOLEAN = 10,
 };
-const IDP_NUMTYPES =  11
+export const IDP_NUMTYPES =  11
 
 /** Used by some IDP utils, keep values in sync with type enum above. */
-enum {
-  IDP_TYPE_FILTER_STRING = 1 << IDP_STRING,
-  IDP_TYPE_FILTER_INT = 1 << IDP_INT,
-  IDP_TYPE_FILTER_FLOAT = 1 << IDP_FLOAT,
-  IDP_TYPE_FILTER_ARRAY = 1 << IDP_ARRAY,
-  IDP_TYPE_FILTER_GROUP = 1 << IDP_GROUP,
-  IDP_TYPE_FILTER_ID = 1 << IDP_ID,
-  IDP_TYPE_FILTER_DOUBLE = 1 << IDP_DOUBLE,
-  IDP_TYPE_FILTER_IDPARRAY = 1 << IDP_IDPARRAY,
-  IDP_TYPE_FILTER_BOOLEAN = 1 << IDP_BOOLEAN,
-};
+export const IDP_TYPE_FILTER_STRING   = 1 << 0;
+export const IDP_TYPE_FILTER_INT      = 1 << 1;
+export const IDP_TYPE_FILTER_FLOAT    = 1 << 2;
+export const IDP_TYPE_FILTER_ARRAY    = 1 << 5;
+export const IDP_TYPE_FILTER_GROUP    = 1 << 6;
+export const IDP_TYPE_FILTER_ID       = 1 << 7;
+export const IDP_TYPE_FILTER_DOUBLE   = 1 << 8;
+export const IDP_TYPE_FILTER_IDPARRAY = 1 << 9;
+export const IDP_TYPE_FILTER_BOOLEAN  = 1 << 10;
 
 /** #IDProperty.subtype for #IDP_STRING properties. */
-typedef enum eIDPropertySubType {
+export enum eIDPropertySubType {
   IDP_STRING_SUB_UTF8 = 0, /* default */
   IDP_STRING_SUB_BYTE = 1, /* arbitrary byte array, _not_ null terminated */
-} eIDPropertySubType;
+};
 
 /** #IDProperty.flag. */
-typedef enum eIDPropertyFlag {
+export enum eIDPropertyFlag {
   /**
    * This #IDProperty may be library-overridden.
    * Should only be used/be relevant for custom properties.
@@ -74,7 +72,7 @@ typedef enum eIDPropertyFlag {
    * #RNA_property_is_set, currently this is a runtime flag.
    */
   IDP_FLAG_GHOST = 1 << 7,
-} eIDPropertyFlag;
+};
 
 /**
  * Defines for working with IDs.
@@ -83,7 +81,9 @@ typedef enum eIDPropertyFlag {
  * sig_byte end endian defines aren't really used much.
  */
 /* NOTE: this is endianness-sensitive. */
-#define MAKE_ID2(c, d) ((d) << 8 | (c))
+export function MAKE_ID2(c: string, d: string): number {
+  return (d.charCodeAt(0) << 8) | c.charCodeAt(0);
+}
 
 /**
  * ID from database.
@@ -98,7 +98,7 @@ typedef enum eIDPropertyFlag {
  *
  * Update #ID_TYPE_IS_DEPRECATED() when deprecating types.
  */
-typedef enum ID_Type {
+export enum ID_Type {
   ID_SCE = MAKE_ID2('S', 'C'),       /* Scene */
   ID_LI = MAKE_ID2('L', 'I'),        /* Library */
   ID_OB = MAKE_ID2('O', 'B'),        /* Object */
@@ -138,25 +138,21 @@ typedef enum ID_Type {
   ID_PT = MAKE_ID2('P', 'T'),        /* PointCloud */
   ID_VO = MAKE_ID2('V', 'O'),        /* Volume */
   ID_GP = MAKE_ID2('G', 'P'),        /* Grease Pencil */
-} ID_Type;
+};
 
 /* Only used as 'placeholder' in .blend files for directly linked data-blocks. */
-#define ID_LINK_PLACEHOLDER MAKE_ID2('I', 'D') /* (internal use only) */
+export const ID_LINK_PLACEHOLDER = MAKE_ID2('I', 'D'); /* (internal use only) */
 
 /* Deprecated. */
-#define ID_SCRN MAKE_ID2('S', 'N')
+export const ID_SCRN = MAKE_ID2('S', 'N');
 
 /* NOTE: Fake IDs, needed for `g.sipo->blocktype` or outliner. */
-#define ID_SEQ MAKE_ID2('S', 'Q')
+export const ID_SEQ = MAKE_ID2('S', 'Q');
 /* constraint */
-#define ID_CO MAKE_ID2('C', 'O')
+export const ID_CO = MAKE_ID2('C', 'O');
 /* pose (action channel, used to be ID_AC in code, so we keep code for backwards compatible). */
-#define ID_PO MAKE_ID2('A', 'C')
+export const ID_PO = MAKE_ID2('A', 'C');
 /* used in outliner... */
-#define ID_NLA MAKE_ID2('N', 'L')
+export const ID_NLA = MAKE_ID2('N', 'L');
 /* fluidsim Ipo */
-#define ID_FLUIDSIM MAKE_ID2('F', 'S')
-
-#ifdef __cplusplus
-}
-#endif
+export const ID_FLUIDSIM = MAKE_ID2('F', 'S');
